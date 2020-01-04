@@ -1,3 +1,9 @@
 # 1-on-1 chat program
-* java
-* socket programming
+* Socket Programming in Java
+##excutable files
+#### on console
+* Server
+* Client
+#### on GUI
+* ServerMainFrame
+* ClientMainFrame
