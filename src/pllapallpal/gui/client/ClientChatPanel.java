@@ -1,4 +1,4 @@
-package pllapallpal.view.client;
+package pllapallpal.gui.client;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +18,7 @@ public class ClientChatPanel {
         chatPanel = new JPanel(new BorderLayout(5, 5));
 
         textField = new JTextField();
+        textField.setFont(new Font(Font.SERIF, Font.PLAIN, 20));
         textField.setBorder(BorderFactory.createLineBorder(Color.black));
         textField.requestFocus();
         textField.addActionListener(e -> {
@@ -26,7 +27,9 @@ public class ClientChatPanel {
                 textField.setText("");
             }
         });
-        sendButton = new JButton("Send");
+
+        sendButton = new JButton(" Send ");
+        sendButton.setFont(new Font(Font.SERIF, Font.PLAIN, 20));
         sendButton.setBorder(BorderFactory.createLineBorder(Color.black));
         sendButton.addActionListener(e -> {
             if (!textField.getText().equals("")) {

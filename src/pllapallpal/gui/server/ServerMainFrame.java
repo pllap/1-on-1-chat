@@ -1,9 +1,11 @@
-package pllapallpal.view.client;
+package pllapallpal.gui.server;
+
+import pllapallpal.gui.client.ClientChatPanel;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class ClientMainFrame {
+public class ServerMainFrame {
 
     private JFrame mainFrame;
 
@@ -11,7 +13,7 @@ public class ClientMainFrame {
     private JTextArea chatLog;
     private ClientChatPanel chatPanel;
 
-    public ClientMainFrame() {
+    public ServerMainFrame() {
         mainFrame = new JFrame("Client");
 
         mainPanel = new JPanel(new BorderLayout(5, 5));
@@ -19,7 +21,7 @@ public class ClientMainFrame {
         mainFrame.getContentPane().add(mainPanel);
 
 
-        chatLog = new JTextArea("Connected to Server");
+        chatLog = new JTextArea();
         chatLog.setFont(new Font(Font.SERIF, Font.PLAIN, 20));
         chatLog.setBorder(BorderFactory.createLineBorder(Color.black));
         chatLog.setEditable(false);
@@ -37,10 +39,10 @@ public class ClientMainFrame {
     }
 
     public void refreshChatLog(String line) {
-        chatLog.append("\nClient: " + line);
+        chatLog.append("\nServer: " + line);
     }
 
     public static void main(String[] args) {
-        new ClientMainFrame();
+        new ServerMainFrame();
     }
 }
