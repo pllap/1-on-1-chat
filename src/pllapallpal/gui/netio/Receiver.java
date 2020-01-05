@@ -20,7 +20,7 @@ public class Receiver implements Runnable {
     public void run() {
         while (true) {
             try {
-                chatLog.append("\n[" + name + "] " + input.readUTF());
+                chatLog.append("[" + name + "] " + input.readUTF() + "\n");
             } catch (IOException e) {
                 e.printStackTrace();
                 break;

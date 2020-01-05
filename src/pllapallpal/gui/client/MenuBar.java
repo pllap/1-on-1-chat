@@ -1,8 +1,12 @@
 package pllapallpal.gui.client;
 
 import javax.swing.*;
+import java.awt.*;
+import java.io.*;
 
 public class MenuBar {
+
+    private final String PATH = "out.txt";
 
     private JMenuBar menuBar;
 
@@ -19,6 +23,8 @@ public class MenuBar {
     private JTextArea chatLog;
 
     public MenuBar(JTextArea chatLog) {
+
+        this.chatLog = chatLog;
 
         menuBar = new JMenuBar();
 
@@ -38,6 +44,55 @@ public class MenuBar {
 
         menuBar.add(fileMenu);
         menuBar.add(editMenu);
+
+
+        save.addActionListener(e -> {
+            saveToFile(chatLog.getText());
+        });
+        load.addActionListener(e -> {
+            loadFromFile(chatLog);
+        });
+        exit.addActionListener(e -> {
+            int input = JOptionPane.showConfirmDialog(null, "Do you want to exit?", "Message", JOptionPane.YES_NO_OPTION);
+            if (input == 0) {
+                System.exit(0);
+            }
+        });
+
+        clear.addActionListener(e -> {
+            chatLog.setText("");
+        });
+        selectAll.addActionListener(e -> {
+            chatLog.requestFocus();
+            chatLog.selectAll();
+        });
+    }
+
+    public void saveToFile(String text) {
+        if (!text.equals("")) {
+            try {
+                BufferedWriter writer = new BufferedWriter(new FileWriter(PATH));
+                writer.write(text);
+                Desktop.getDesktop().edit(new File(PATH));
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void loadFromFile(JTextArea chatLog) {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(PATH));
+            chatLog.setText("");
+            String str;
+            while ((str = reader.readLine()) != null) {
+                chatLog.append(str + "\n");
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public JMenuBar getMenuBar() {

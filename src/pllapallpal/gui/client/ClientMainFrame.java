@@ -26,7 +26,7 @@ public class ClientMainFrame {
         mainFrame.getContentPane().add(mainPanel);
 
 
-        chatLog = new JTextArea("Connected to Server");
+        chatLog = new JTextArea("Connected to Server \n");
         chatLog.setFont(new Font(Font.SERIF, Font.PLAIN, 20));
         chatLog.setBorder(BorderFactory.createLineBorder(Color.black));
         chatLog.setEditable(false);
@@ -52,7 +52,7 @@ public class ClientMainFrame {
     }
 
     public void refreshChatLog(String line) {
-        chatLog.append("\nClient: " + line);
+        chatLog.append("Client: " + line + "\n");
     }
 
     public static void main(String[] args) {
