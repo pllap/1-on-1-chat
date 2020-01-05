@@ -20,7 +20,7 @@ public class Receiver implements Runnable {
         this.chatLog = chatLog;
 
         try {
-            writer = new BufferedWriter(new FileWriter("out.txt"));
+            writer = new BufferedWriter(new FileWriter("out.txt", false));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -31,7 +31,7 @@ public class Receiver implements Runnable {
         while (true) {
             try {
                 chatLog.append("[" + name + "] " + input.readUTF() + "\n");
-                if (name.equals("Client")) {
+                if (name.equals("Server")) {
                     writer.write(chatLog.getText());
                     writer.flush();
                 }

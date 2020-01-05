@@ -40,7 +40,7 @@ public class ClientChatPanel {
                     String message = chatMessage.getText();
                     chatMessage.setText("");
                     refreshChatLog.accept(message);
-                    writer.write(message);
+                    writer.write("Client: " + message + "\n");
                     writer.flush();
                     clientModel.getOutput().writeUTF(message);
                 } catch (IOException exception) {
