@@ -1,1 +1,18 @@
-Connected to Server 
+Client accepted 
+Server: asdf
+Server: asdf
+Server: asdf
+[Client] asdf
+Client accepted 
+Server: asdf
+Server: asdf
+Server: asdf
+[Client] asdf
+[Client] asdf
+Client accepted 
+Server: asdf
+Server: asdf
+Server: asdf
+[Client] asdf
+[Client] asdf
+[Client] asdf

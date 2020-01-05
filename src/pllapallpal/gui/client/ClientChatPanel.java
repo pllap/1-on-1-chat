@@ -4,6 +4,8 @@ import pllapallpal.gui.model.ClientModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.function.Consumer;
 
@@ -16,12 +18,17 @@ public class ClientChatPanel {
 
     private Consumer<String> refreshChatLog;
 
-    private ClientModel clientModel;
+    private BufferedWriter writer;
 
     public ClientChatPanel(ClientModel clientModel) {
 
         chatPanel = new JPanel(new BorderLayout(5, 5));
-        this.clientModel = clientModel;
+
+        try {
+            writer = new BufferedWriter(new FileWriter("out.txt", true));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         chatMessage = new JTextField();
         chatMessage.setFont(new Font(Font.SERIF, Font.PLAIN, 20));
@@ -30,9 +37,12 @@ public class ClientChatPanel {
         chatMessage.addActionListener(e -> {
             if (!chatMessage.getText().equals("")) {
                 try {
-                    refreshChatLog.accept(chatMessage.getText());
-                    clientModel.getOutput().writeUTF(chatMessage.getText());
+                    String message = chatMessage.getText();
                     chatMessage.setText("");
+                    refreshChatLog.accept(message);
+                    writer.write(message);
+                    writer.flush();
+                    clientModel.getOutput().writeUTF(message);
                 } catch (IOException exception) {
                     exception.printStackTrace();
                 }
@@ -45,9 +55,11 @@ public class ClientChatPanel {
         sendButton.addActionListener(e -> {
             if (!chatMessage.getText().equals("")) {
                 try {
-                    refreshChatLog.accept(chatMessage.getText());
-                    clientModel.getOutput().writeUTF(chatMessage.getText());
+                    String message = chatMessage.getText();
                     chatMessage.setText("");
+                    refreshChatLog.accept(message);
+                    writer.write(message);
+                    clientModel.getOutput().writeUTF(message);
                 } catch (IOException exception) {
                     exception.printStackTrace();
                 }

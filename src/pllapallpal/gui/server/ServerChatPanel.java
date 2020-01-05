@@ -16,12 +16,9 @@ public class ServerChatPanel {
 
     private Consumer<String> sendMessage;
 
-    private ServerModel serverModel;
-
     public ServerChatPanel(ServerModel serverModel) {
 
         chatPanel = new JPanel(new BorderLayout(5, 5));
-        this.serverModel = serverModel;
 
         textField = new JTextField();
         textField.setFont(new Font(Font.SERIF, Font.PLAIN, 20));

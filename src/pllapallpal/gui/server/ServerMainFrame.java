@@ -26,7 +26,7 @@ public class ServerMainFrame {
         mainFrame.getContentPane().add(mainPanel);
 
 
-        chatLog = new JTextArea("Client accepted");
+        chatLog = new JTextArea("Client accepted \n");
         chatLog.setFont(new Font(Font.SERIF, Font.PLAIN, 20));
         chatLog.setBorder(BorderFactory.createLineBorder(Color.black));
         chatLog.setEditable(false);
@@ -53,7 +53,7 @@ public class ServerMainFrame {
     }
 
     public void refreshChatLog(String line) {
-        chatLog.append("\nServer: " + line);
+        chatLog.append("Server: " + line + "\n");
     }
 
     public static void main(String[] args) {
