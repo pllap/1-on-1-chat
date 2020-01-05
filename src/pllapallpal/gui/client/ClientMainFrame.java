@@ -1,5 +1,8 @@
 package pllapallpal.gui.client;
 
+import pllapallpal.gui.model.ClientModel;
+import pllapallpal.gui.netio.Receiver;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -10,6 +13,9 @@ public class ClientMainFrame {
     private JPanel mainPanel;
     private JTextArea chatLog;
     private ClientChatPanel chatPanel;
+
+    private ClientModel clientModel;
+    private Thread receiveThread;
 
     public ClientMainFrame() {
         mainFrame = new JFrame("Client");
@@ -26,12 +32,17 @@ public class ClientMainFrame {
         chatLog.setLineWrap(true);
         mainPanel.add(chatLog, BorderLayout.CENTER);
 
-        chatPanel = new ClientChatPanel();
+        clientModel = new ClientModel();
+        receiveThread = new Thread(new Receiver("Server", clientModel.getInput(), chatLog));
+        receiveThread.start();
+
+        chatPanel = new ClientChatPanel(clientModel);
         chatPanel.addRefreshChatLog(this::refreshChatLog);
         mainPanel.add(chatPanel.getPanel(), BorderLayout.SOUTH);
 
 
         mainFrame.setSize(800, 600);
+        mainFrame.setResizable(false);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setVisible(true);
     }

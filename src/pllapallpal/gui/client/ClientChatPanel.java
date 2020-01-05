@@ -1,30 +1,41 @@
 package pllapallpal.gui.client;
 
+import pllapallpal.gui.model.ClientModel;
+
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.function.Consumer;
 
 public class ClientChatPanel {
 
     private JPanel chatPanel;
 
-    private JTextField textField;
+    private JTextField chatMessage;
     private JButton sendButton;
 
-    private Consumer<String> sendMessage;
+    private Consumer<String> refreshChatLog;
 
-    public ClientChatPanel() {
+    private ClientModel clientModel;
+
+    public ClientChatPanel(ClientModel clientModel) {
 
         chatPanel = new JPanel(new BorderLayout(5, 5));
+        this.clientModel = clientModel;
 
-        textField = new JTextField();
-        textField.setFont(new Font(Font.SERIF, Font.PLAIN, 20));
-        textField.setBorder(BorderFactory.createLineBorder(Color.black));
-        textField.requestFocus();
-        textField.addActionListener(e -> {
-            if (!textField.getText().equals("")) {
-                sendMessage.accept(textField.getText());
-                textField.setText("");
+        chatMessage = new JTextField();
+        chatMessage.setFont(new Font(Font.SERIF, Font.PLAIN, 20));
+        chatMessage.setBorder(BorderFactory.createLineBorder(Color.black));
+        chatMessage.requestFocus();
+        chatMessage.addActionListener(e -> {
+            if (!chatMessage.getText().equals("")) {
+                try {
+                    refreshChatLog.accept(chatMessage.getText());
+                    clientModel.getOutput().writeUTF(chatMessage.getText());
+                    chatMessage.setText("");
+                } catch (IOException exception) {
+                    exception.printStackTrace();
+                }
             }
         });
 
@@ -32,18 +43,23 @@ public class ClientChatPanel {
         sendButton.setFont(new Font(Font.SERIF, Font.PLAIN, 20));
         sendButton.setBorder(BorderFactory.createLineBorder(Color.black));
         sendButton.addActionListener(e -> {
-            if (!textField.getText().equals("")) {
-                sendMessage.accept(textField.getText());
-                textField.setText("");
+            if (!chatMessage.getText().equals("")) {
+                try {
+                    refreshChatLog.accept(chatMessage.getText());
+                    clientModel.getOutput().writeUTF(chatMessage.getText());
+                    chatMessage.setText("");
+                } catch (IOException exception) {
+                    exception.printStackTrace();
+                }
             }
         });
 
-        chatPanel.add(textField, BorderLayout.CENTER);
+        chatPanel.add(chatMessage, BorderLayout.CENTER);
         chatPanel.add(sendButton, BorderLayout.EAST);
     }
 
     public void addRefreshChatLog(Consumer<String> sendMessage) {
-        this.sendMessage = sendMessage;
+        this.refreshChatLog = sendMessage;
     }
 
     public JPanel getPanel() {

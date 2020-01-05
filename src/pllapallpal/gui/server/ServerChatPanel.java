@@ -1,7 +1,10 @@
 package pllapallpal.gui.server;
 
+import pllapallpal.gui.model.ServerModel;
+
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.function.Consumer;
 
 public class ServerChatPanel {
@@ -13,9 +16,12 @@ public class ServerChatPanel {
 
     private Consumer<String> sendMessage;
 
-    public ServerChatPanel() {
+    private ServerModel serverModel;
+
+    public ServerChatPanel(ServerModel serverModel) {
 
         chatPanel = new JPanel(new BorderLayout(5, 5));
+        this.serverModel = serverModel;
 
         textField = new JTextField();
         textField.setFont(new Font(Font.SERIF, Font.PLAIN, 20));
@@ -23,8 +29,13 @@ public class ServerChatPanel {
         textField.requestFocus();
         textField.addActionListener(e -> {
             if (!textField.getText().equals("")) {
-                sendMessage.accept(textField.getText());
-                textField.setText("");
+                try {
+                    sendMessage.accept(textField.getText());
+                    serverModel.getOutput().writeUTF(textField.getText());
+                    textField.setText("");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
 
@@ -33,8 +44,13 @@ public class ServerChatPanel {
         sendButton.setBorder(BorderFactory.createLineBorder(Color.black));
         sendButton.addActionListener(e -> {
             if (!textField.getText().equals("")) {
-                sendMessage.accept(textField.getText());
-                textField.setText("");
+                try {
+                    sendMessage.accept(textField.getText());
+                    serverModel.getOutput().writeUTF(textField.getText());
+                    textField.setText("");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
 
