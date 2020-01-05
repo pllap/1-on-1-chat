@@ -10,6 +10,7 @@ public class ClientMainFrame {
 
     private JFrame mainFrame;
 
+    private MenuBar menuBar;
     private JPanel mainPanel;
     private JTextArea chatLog;
     private ClientChatPanel chatPanel;
@@ -40,6 +41,9 @@ public class ClientMainFrame {
         chatPanel.addRefreshChatLog(this::refreshChatLog);
         mainPanel.add(chatPanel.getPanel(), BorderLayout.SOUTH);
 
+
+        menuBar = new MenuBar(chatLog);
+        mainFrame.setJMenuBar(menuBar.getMenuBar());
 
         mainFrame.setSize(800, 600);
         mainFrame.setResizable(false);
